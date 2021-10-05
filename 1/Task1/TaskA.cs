@@ -38,7 +38,7 @@ namespace Task1
                     }
                 }
             }
-            if (countNum == 0)
+            if (countNum.Equals(0))
             {
                 Console.WriteLine("You entered the wrong range.");
             }
