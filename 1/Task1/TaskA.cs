@@ -10,6 +10,7 @@ namespace Task1
         public static void ParseStr()
         {
             Console.WriteLine("Hi! Enter two values: ");
+
             var valInt = Console
                 .ReadLine()
                 .Split()
@@ -17,6 +18,7 @@ namespace Task1
                 .ToArray();
 
             Console.WriteLine("Three-digit numbers containing two twos in your range:");
+
             for (int i = valInt[0]; i <= valInt[1]; i++)
             {
                 var test = i
@@ -27,7 +29,7 @@ namespace Task1
                 if (test.Count.Equals(3))
                 {
                     var countOfTwo = test
-                        .Where(x => x == 2)
+                        .Where(x => x.Equals(2))
                         .ToList()
                         .Count;
 
