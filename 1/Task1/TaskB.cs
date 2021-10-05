@@ -5,7 +5,6 @@ namespace Task1
 {
     public static class TaskB
     {
-
         public static void CreateISBN()
         {
             var uniqId = 0;

@@ -24,14 +24,14 @@ namespace Task1
                     .Select(x => (int)char.GetNumericValue(x))
                     .ToList();
 
-                if (test.Count == 3)
+                if (test.Count.Equals(3))
                 {
                     var countOfTwo = test
                         .Where(x => x == 2)
                         .ToList()
                         .Count;
 
-                    if (countOfTwo == 2)
+                    if (countOfTwo.Equals(2))
                     {
                         Console.WriteLine(i);
                         countNum++;
