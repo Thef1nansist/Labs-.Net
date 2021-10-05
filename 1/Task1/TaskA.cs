@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Task1
@@ -21,29 +22,37 @@ namespace Task1
 
             for (int i = valInt[0]; i <= valInt[1]; i++)
             {
-                var test = i
-                    .ToString()
-                    .Select(x => (int)char.GetNumericValue(x))
-                    .ToList();
+                var convertValues = parseToThree(i);
 
-                if (test.Count.Equals(3))
+                var countOfTwo = convertValues
+                    .Where(x => x.Equals(2))
+                    .ToList()
+                    .Count;
+
+                if (countOfTwo.Equals(2))
                 {
-                    var countOfTwo = test
-                        .Where(x => x.Equals(2))
-                        .ToList()
-                        .Count;
-
-                    if (countOfTwo.Equals(2))
-                    {
-                        Console.WriteLine(i);
-                        countNum++;
-                    }
+                    Console.WriteLine(i);
+                    countNum++;
                 }
+
             }
             if (countNum.Equals(0))
             {
                 Console.WriteLine("You entered the wrong range.");
             }
+        }
+        private static List<int> parseToThree(int numberOfInt)
+        {
+            var list = new List<int>();
+
+            while (numberOfInt > 0)
+            {
+                int temp1 = numberOfInt % 3;
+                numberOfInt = numberOfInt / 3;
+                list.Add(temp1);
+            }
+
+            return list;
         }
     }
 }

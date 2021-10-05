@@ -8,8 +8,9 @@ namespace Task1
         {
             while (true)
             {
-                Console.Write("\n1-1\n2-2\n3-3\n");
+                Console.Write("\n1-1\n2-2\n3-3\n4-exit\n");
                 Console.Write("> ");
+
                 var index = Console.ReadLine();
 
                 switch (index)
@@ -23,6 +24,8 @@ namespace Task1
                     case "3":
                         TaskC.SumArr();
                         break;
+                    case "4":
+                        return;
 
                     default:
                         Console.WriteLine("Incorrect value!!!");

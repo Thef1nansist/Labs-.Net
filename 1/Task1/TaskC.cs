@@ -10,6 +10,12 @@ namespace Task1
 
             var countOfArray = int.Parse(Console.ReadLine());
 
+            if (countOfArray < 2)
+            {
+                Console.WriteLine("Array size can't be < 2");
+                return;
+            }
+
             int[] arr = new int[countOfArray];
             var max = 0;
             var minId = 0;
@@ -31,7 +37,7 @@ namespace Task1
                     min = arr[i];
                     minId = i;
                 }
-                else if (arr[i] > max)
+                else if (arr[i] >= max)
                 {
                     max = arr[i];
                     maxId = i;
