@@ -28,6 +28,7 @@ namespace Task1
 
             var partIntCount = uniqId / divider + 1;
             var d10 = partIntCount * divider - uniqId;
+
             if (d10.Equals(10))
             {
                 ISBN += 'X';
@@ -36,6 +37,7 @@ namespace Task1
             {
                 ISBN += d10.ToString();
             }
+
             Console.WriteLine(ISBN);
         }
     }

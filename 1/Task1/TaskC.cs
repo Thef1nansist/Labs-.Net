@@ -11,17 +11,18 @@ namespace Task1
             var countOfArray = int.Parse(Console.ReadLine());
 
             int[] arr = new int[countOfArray];
-
             var max = 0;
             var minId = 0;
             var maxId = 0;
             var sum = 0;
 
             Console.WriteLine("Fill the array with elements: ");
+
             for (int i = 0; i < countOfArray; i++)
             {
                 arr[i] = int.Parse(Console.ReadLine());
             }
+
             var min = arr[0];
             for (int i = 0; i < arr.Length; i++)
             {
@@ -49,6 +50,7 @@ namespace Task1
             {
                 Console.Write(arr[i] + " ");
             }
+
             Console.Write("\n Sum:" + sum);
         }
     }
