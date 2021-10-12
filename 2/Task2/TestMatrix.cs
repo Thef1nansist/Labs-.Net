@@ -6,7 +6,7 @@ namespace Task2
     {
         #region private
 
-        private int[] _matrix;
+        private readonly int[] _matrix;
 
         #endregion
 
