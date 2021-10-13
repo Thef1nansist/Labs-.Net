@@ -1,7 +1,9 @@
 ﻿namespace Task2B
 {
-    public interface IExercise
+    public abstract class Exercise
     {
         public string TextDescription { get; set; }
+
+        public abstract object Clone();
     }
 }

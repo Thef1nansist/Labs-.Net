@@ -11,16 +11,16 @@
                 if (matrix1.Size > matrix2.Size)
                 {
                     length = matrix1.Size;
-                    matrix2 = new TestMatrix(createNewArr(length, matrix2));
+                    matrix2 = new TestMatrix(CreateMatrix(length, matrix2));
                 }
                 else
                 {
                     length = matrix2.Size;
-                    matrix1 = new TestMatrix(createNewArr(length, matrix1));
+                    matrix1 = new TestMatrix(CreateMatrix(length, matrix1));
                 }
             }
 
-            int[] newMatrix = new int[length];
+            var newMatrix = new int[length];
 
             for (var i = 0; i < length; i++)
             {
@@ -30,7 +30,7 @@
             return new TestMatrix(newMatrix);
         }
 
-        private static int[] createNewArr(int lenght, TestMatrix matrix)
+        private static int[] CreateMatrix(int lenght, TestMatrix matrix)
         {
             var newMatrix = new int[lenght];
 

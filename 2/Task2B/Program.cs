@@ -7,8 +7,8 @@ namespace Task2B
         static void Main()
         {
             Training training = new() { TextDescription = "train 1"};
-            IExercise exercise = new Lecture{ TextDescription = "lec1", Theme = "suck some dick" };
-            IExercise exercise1 = new PracticalLesson { LessonRef = null, SolutionRef = "test1", TextDescription = "test2" };
+            Exercise exercise = new Lecture{ TextDescription = "lec1", Theme = "Asp.Net Core 5" };
+            Exercise exercise1 = new PracticalLesson { LessonRef = null, SolutionRef = "test1", TextDescription = "test2" };
             training.Add(exercise);
             training.Add(exercise1);
 
@@ -16,10 +16,11 @@ namespace Task2B
             training1.Add(exercise1);
             training1.Add(exercise1);
 
-            Console.WriteLine(training.IsPracrial());
-            Console.WriteLine(training1.IsPracrial());
+            Console.WriteLine(training.IsPractical());
+            Console.WriteLine(training1.IsPractical());
 
-            Training training2 = training.DeepClone();
+            var training2 = training1.DeepClone();
+            Console.WriteLine("Deep Copy with: " + training2.TextDescription);
 
             Console.ReadKey();
         }

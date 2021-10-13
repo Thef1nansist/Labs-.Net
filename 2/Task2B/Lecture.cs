@@ -1,10 +1,17 @@
-﻿using System;
-
-namespace Task2B
+﻿namespace Task2B
 {
-    public class Lecture : IExercise
+    public class Lecture : Exercise
     {
-        public string TextDescription { get; set; }
         public string Theme { get; set; }
+
+        public override Lecture Clone()
+        {
+            var lecture = new Lecture
+            {
+                Theme = Theme,
+                TextDescription = TextDescription
+            };
+            return lecture;
+        }
     }
 }

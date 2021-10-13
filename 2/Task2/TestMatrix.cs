@@ -27,21 +27,26 @@ namespace Task2
             }
             set
             {
-                if (i == j)
+                if (i == j && IsIndexCorrect(i) && IsIndexCorrect(j))
                 {
                     _matrix[i] = value;
                 }
             }
+
+        }
+
+        private bool IsIndexCorrect(int index)
+        {
+            return index < Size && index >= 0;
         }
 
         #endregion
 
         #region constructors
-
         public TestMatrix(params int[] matrix)
         {
-            _matrix = matrix;
-            Size = matrix.Length;
+            _matrix = matrix ?? Array.Empty<int>();
+            Size = matrix == null ? 0 : matrix.Length; 
         }
 
         #endregion
@@ -62,12 +67,10 @@ namespace Task2
 
         public override bool Equals(object obj)
         {
-            if (!(obj is TestMatrix))
+            if (obj is not TestMatrix matrix)
             {
                 return false;
             }
-
-            TestMatrix matrix = obj as TestMatrix;
 
             if (Size != matrix.Size)
             {
@@ -88,9 +91,9 @@ namespace Task2
         {
             var str = "";
 
-            for (var i = 0; i < this.Size; i++)
+            for (var i = 0; i < Size; i++)
             {
-                for (var j = 0; j < this.Size; j++)
+                for (var j = 0; j < Size; j++)
                 {
                     str += this[i, j] + " ";
                 }
@@ -100,10 +103,7 @@ namespace Task2
             return str;
         }
 
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
+        public override int GetHashCode() => _matrix.GetHashCode();
     }
 
     #endregion

@@ -1,9 +1,20 @@
 ﻿namespace Task2B
 {
-    public class PracticalLesson : IExercise
+    public class PracticalLesson : Exercise
     {
-        public string TextDescription { get; set; }
         public string LessonRef { get; set; }
         public string SolutionRef { get; set; }
+
+        public override PracticalLesson Clone()
+        {
+            var practical = new PracticalLesson
+            {
+                LessonRef = LessonRef,
+                SolutionRef = SolutionRef,
+                TextDescription = TextDescription
+            };
+
+            return practical;
+        }
     }
 }
