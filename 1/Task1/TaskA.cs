@@ -18,18 +18,29 @@ namespace Task1
                 .Select(int.Parse)
                 .ToArray();
 
+            if (valInt[0] > valInt[1])
+            {
+                var temp = valInt[1];
+                valInt[1] = valInt[0];
+                valInt[0] = temp;
+            }
+
             Console.WriteLine("Three-digit numbers containing two twos in your range:");
 
-            for (int i = valInt[0]; i <= valInt[1]; i++)
+            for (var i = valInt[0]; i <= valInt[1]; i++)
             {
-                var convertValues = parseToThree(i);
+                var convertValues = ParseToThree(i);
 
                 var countOfTwo = convertValues
                     .Where(x => x.Equals(2))
-                    .ToList()
-                    .Count;
+                    .Count();
 
-                if (countOfTwo.Equals(2))
+                if (countOfTwo.Equals(2) && i > 0)
+                {
+                    Console.WriteLine(i);
+                    countNum++;
+                }
+                else if (countOfTwo.Equals(2) && i < 0)
                 {
                     Console.WriteLine(i);
                     countNum++;
@@ -41,13 +52,15 @@ namespace Task1
                 Console.WriteLine("You entered the wrong range.");
             }
         }
-        private static List<int> parseToThree(int numberOfInt)
+        private static List<int> ParseToThree(int numberOfInt)
         {
             var list = new List<int>();
 
+            numberOfInt = Math.Abs(numberOfInt);
+
             while (numberOfInt > 0)
             {
-                int temp1 = numberOfInt % 3;
+                var temp1 = numberOfInt % 3;
                 numberOfInt = numberOfInt / 3;
                 list.Add(temp1);
             }

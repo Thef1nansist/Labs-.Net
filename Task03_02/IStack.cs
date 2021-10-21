@@ -2,8 +2,8 @@
 {
     public interface IStack<T>
     {
-        public void Push(T element);
-        public T Pop();
-        public bool IsEmpty();
+        void Push(T element);
+        T Pop();
+        bool IsEmpty();
     }
 }

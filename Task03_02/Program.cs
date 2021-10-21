@@ -4,9 +4,12 @@ namespace Task03_02
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var stack = new Stack<int>();
+            var vladik = new Stack<int>();
+
+            //vladik.Push(null);
 
             Console.WriteLine(stack.IsEmpty());
 

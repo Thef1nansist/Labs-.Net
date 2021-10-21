@@ -16,21 +16,21 @@ namespace Task1
                 return;
             }
 
-            int[] arr = new int[countOfArray];
-            var max = 0;
+            var arr = new int[countOfArray];
+            var max = int.MinValue;
+            var min = int.MaxValue;
             var minId = 0;
             var maxId = 0;
             var sum = 0;
 
             Console.WriteLine("Fill the array with elements: ");
 
-            for (int i = 0; i < countOfArray; i++)
+            for (var i = 0; i < countOfArray; i++)
             {
                 arr[i] = int.Parse(Console.ReadLine());
             }
-
-            var min = arr[0];
-            for (int i = 0; i < arr.Length; i++)
+            
+            for (var i = 0; i < arr.Length; i++)
             {
                 if (arr[i] < min)
                 {
@@ -47,12 +47,12 @@ namespace Task1
             var rez = Math.Abs(maxId - minId);
             var startIndex = maxId > minId ? minId : maxId;
 
-            for (int i = startIndex; i <= startIndex + rez; i++)
+            for (var i = startIndex; i <= startIndex + rez; i++)
             {
                 sum += arr[i];
             }
 
-            for (int i = 0; i < arr.Length; i++)
+            for (var i = 0; i < arr.Length; i++)
             {
                 Console.Write(arr[i] + " ");
             }

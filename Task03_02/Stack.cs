@@ -2,15 +2,15 @@
 
 namespace Task03_02
 {
-    public class Stack<T> : IStack<T>
+    public class Stack<T> : IStack<T> where T : struct
     {
-        private T[] _stack;
+        private readonly T[] _stack;
         private int _index;
         private const int _capacity = 15;
 
         public Stack()
         {
-            _stack = new T[15];
+            _stack = new T[_capacity];
             _index = -1;
         }
 

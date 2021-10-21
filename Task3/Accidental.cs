@@ -2,8 +2,9 @@
 {
     public enum Accidental
     {
+        Flat = -1,
         NoSign,
-        Sharp,
-        Flat = -1
+        Sharp
+        
     }
 }

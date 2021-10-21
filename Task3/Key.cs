@@ -32,16 +32,7 @@ namespace Task3
 
         public override string ToString()
         {
-            var symbol = "";
-
-            if(_accidental == Accidental.Flat)
-            {
-                symbol = "&";
-            }
-            else if(_accidental == Accidental.Sharp)
-            {
-                symbol = "#";
-            }
+            var symbol = _accidental == Accidental.Flat ? "&" : _accidental == Accidental.Sharp ? "#" : "";
 
             return $"{_note}{symbol} ({_octave})";
         }

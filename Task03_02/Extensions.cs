@@ -2,7 +2,8 @@
 {
     public static class Extensions
     {
-        public static IStack<T> Reverse<T>(this IStack<T> stack)
+
+        public static IStack<T> Reverse<T>(this IStack<T> stack) where T : struct
         {
             IStack<T> temp = new Stack<T>();
 
