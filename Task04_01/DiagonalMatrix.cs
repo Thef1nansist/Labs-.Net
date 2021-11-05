@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task04_01
 {
-    public class DiagonalMatrix<T> where T : struct
+    public class DiagonalMatrix<T> 
     {
         public event Action<int, int, T, T> ElementChanged;
         private readonly T[] _data;
@@ -18,46 +14,19 @@ namespace Task04_01
             get => i == j && IsCorrect(i) ? _data[i] : default;
             set
             {
-                if (i == j && IsCorrect(i))
+                if (i == j && IsCorrect(i) && !(_data[i]?.GetHashCode() == value?.GetHashCode()))
                 {
-                    if (_data[i].Equals(value))
-                    {
-                        _data[i] = value;
-                    }
-                    else
-                    {
-                        var temp = _data[i];
-                        _data[i] = value;
-                        ElementChanged?.Invoke(i, j, temp, value);
-                    }
+                    var temp = _data[i];
+                    _data[i] = value;
+                    ElementChanged?.Invoke(i, j, temp, value);
                 }
             }
         }
 
         public DiagonalMatrix(int size)
         {
-            Size = size < 0 ? throw new ArgumentException() : size;
+            Size = size < 0 ? throw new ArgumentException("Size can't be < 0") : size;
             _data = new T[size];
-            FillingMatrix(size);
-        }
-
-        public DiagonalMatrix()
-        {
-
-        }
-
-        public DiagonalMatrix(params T[] data)
-        {
-            _data = data;
-            Size = _data.Length;
-        }
-
-        private void FillingMatrix(int size)
-        {
-            for (int i = 0; i < size; i++)
-            {
-                _data[i] = default;
-            }
         }
 
         public override string ToString()

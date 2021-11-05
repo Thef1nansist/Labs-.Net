@@ -1,70 +1,94 @@
 ﻿using System;
 
-
 namespace Task04_01
 {
     class Program
     {
         static void Main()
         {
-            DiagonalMatrix<byte> d2 = new(5);
-            var d1 = new DiagonalMatrix<byte>(2);
+            DiagonalMatrix<string> strdig = new(5);
 
-            var test1 = new DiagonalMatrix<decimal>(1, 2, 3);
+            strdig[0, 0] = "One";
+            strdig[1, 1] = "Two";
+            strdig[2, 2] = "Three";
+            strdig[3, 3] = "Four";
+            strdig[4, 4] = "Five";
 
-            var test2 = new DiagonalMatrix<byte>(1, 2, 3);
+            Console.WriteLine(strdig.ToString());
 
-            Console.WriteLine(test2.Add(d1, AddHelper).ToString());
+            DiagonalMatrix<string> strdig2 = new(5);
 
-            var asd = d2.Add(d1, AddHelper);
-            ////Console.WriteLine(asd.ToString());
-            ///
-            d2[1, 1] = 1;
+            strdig2[0, 0] = "One";
+            strdig2[1, 1] = "Two";
+            strdig2[2, 2] = "Three";
+            strdig2[3, 3] = "Four";
+            strdig2[4, 4] = "Five";
 
-            Console.WriteLine(d2.ToString());
+            Console.WriteLine(strdig.Add(strdig2, (a1, a2) =>
+            {
+                return a1 + a2;
+            }));
+
+            MatrixTracker<string> matrixTrackerString = new(strdig2);
+
+            Console.WriteLine("ComeBack link type///////////////////");
+            strdig2[0, 0] = "1";
+            Console.WriteLine(strdig2);
+            matrixTrackerString.Undo();
+            strdig2[1, 1] = "2";
+            Console.WriteLine(strdig2);
+            strdig2[2, 2] = "3";
+            Console.WriteLine(strdig2);
+            strdig2[3, 3] = "4";
+            Console.WriteLine(strdig2);
+            matrixTrackerString.Undo();
+            strdig2[4, 4] = null;
+            Console.WriteLine(strdig2);
+            matrixTrackerString.Undo();
+            Console.WriteLine(strdig2);
 
 
-            MatrixTracker<byte> matrixTracker = new(d2);
+            DiagonalMatrix<int> intdig = new(5);
 
-            d2[2, 2] = 2;
-            Console.WriteLine(d2.ToString());
+            intdig[0, 0] = 1;
+            intdig[1, 1] = 2;
+            intdig[2, 2] = 3;
+            intdig[3, 3] = 4;
+            intdig[4, 4] = 5;
+            Console.WriteLine(intdig.ToString());
+
+
+            DiagonalMatrix<int> intdig2 = new(4);
+
+            intdig2[0, 0] = 1;
+            intdig2[1, 1] = 2;
+            intdig2[2, 2] = 3;
+            intdig2[3, 3] = 4;
+            Console.WriteLine(intdig2.ToString());
+
+            Console.WriteLine(intdig.Add(intdig2, (a1, a2) =>
+            {
+                return a1 + a2;
+            }));
+
+
+            Console.WriteLine("ComeBack value type ***************");
+            MatrixTracker<int> matrixTracker = new(intdig2);
+            intdig2[0, 0] = 0;
+            Console.WriteLine(intdig2);
+            intdig2[1, 1] = 2;
+            Console.WriteLine(intdig2);
             matrixTracker.Undo();
-            d2[3, 3] = 3;
-            Console.WriteLine(d2.ToString());
-            d2[4, 4] = 4;
-            Console.WriteLine(d2.ToString());
+            intdig2[2, 2] = 0;
+            Console.WriteLine(intdig2);
+            intdig2[3, 3] = 0;
+            Console.WriteLine(intdig2);
             matrixTracker.Undo();
-            matrixTracker.Undo();
-            Console.ReadLine();
-            Console.WriteLine(d2.ToString());
+            Console.WriteLine(intdig2);
+
+
+           // DiagonalMatrix<decimal> decimaldig = new(-5);
+
         }
-
-        private static DiagonalMatrix<T> AddHelper<T>(DiagonalMatrix<T> first, DiagonalMatrix<T> second) where T : struct
-        {
-            first ??= new DiagonalMatrix<T>();
-            second ??= new DiagonalMatrix<T>();
-
-            if (first.Size < second.Size)
-            {
-                var temp = first;
-                first = second;
-                second = temp;
-            }
-
-            var data = new T[first.Size];
-            dynamic a = first;
-            dynamic b = second;
-            for (int i = 0; i < second.Size; i++)
-            {
-                data[i] = (T)(a[i, i] + b[i, i]);
-            }
-
-            for (int i = second.Size; i < first.Size; i++)
-            {
-                data[i] = first[i, i];
-            }
-            return new DiagonalMatrix<T>(data);
-        }
-
     }
 }
