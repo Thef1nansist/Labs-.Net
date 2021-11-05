@@ -22,7 +22,7 @@ namespace Task04_01
                 result[i, i] = callback(first[i, i], second[i, i]);
             }
 
-            for (int i = second.Size; i < first.Size; i++)
+            for (var i = second.Size; i < first.Size; i++)
             {
                 result[i, i] = first[i, i];
             }
