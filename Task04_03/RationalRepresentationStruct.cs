@@ -11,6 +11,8 @@ namespace Task04_03
         #region constructor
         public RationalRepresentationStruct(int n, int m)
         {
+            m = m > 0 ? m : throw new ArgumentException("M can't be <= 0");
+            (m, m) = IrreducibleFunc(n, m);
             _nestedStruct = new NestedStruct(n, m);
         }
         #endregion
@@ -28,33 +30,10 @@ namespace Task04_03
 
             public NestedStruct(int n, int m)
             {
-                m = m > 0 ? m : throw new ArgumentException("M can't be <= 0");
-                (_n, _m) = IrreducibleFunc(n, m);
+                _n = n;
+                _m = m;
             }
-            private static (int, int) IrreducibleFunc(int n, int m)
-            {
-                var flag = false;
-                if (n < 0)
-                {
-                    flag = true;
-                    n = Math.Abs(n);
-                }
-                for (var i = n + m; i > 0; i--)
-                {
-                    if (n % i == 0 && m % i == 0)
-                    {
-                        n /= i;
-                        m /= i;
-                    }
-                }
 
-                if (flag)
-                {
-                    n = -n;
-                }
-
-                return (n, m);
-            }
         }
         #endregion
         #region methods
@@ -92,6 +71,31 @@ namespace Task04_03
             }
 
             return valueble > 0 ? 1 : -1;
+        }
+
+        private static (int, int) IrreducibleFunc(int n, int m)
+        {
+            var flag = false;
+            if (n < 0)
+            {
+                flag = true;
+                n = Math.Abs(n);
+            }
+            for (var i = n + m; i > 0; i--)
+            {
+                if (n % i == 0 && m % i == 0)
+                {
+                    n /= i;
+                    m /= i;
+                }
+            }
+
+            if (flag)
+            {
+                n = -n;
+            }
+
+            return (n, m);
         }
 
         #endregion
