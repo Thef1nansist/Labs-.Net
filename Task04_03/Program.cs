@@ -7,8 +7,7 @@ namespace Task04_03
         static void Main()
         {
             RationalRepresentationStruct rationalRepresentationStruct = new();
-            Console.WriteLine(rationalRepresentationStruct);
-            Console.WriteLine(rationalRepresentationStruct / rationalRepresentationStruct);
+            
         }
     }
 }
