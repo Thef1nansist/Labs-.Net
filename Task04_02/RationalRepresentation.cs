@@ -79,7 +79,6 @@ namespace Task04_02
         }
 #endregion
         #region ovveride operators
-
         public static RationalRepresentation operator +(RationalRepresentation first, RationalRepresentation second)
         {
             if (first == null || second == null)
@@ -116,6 +115,10 @@ namespace Task04_02
             if (first == null || second == null)
             {
                 throw new ArgumentNullException("RationalRepresentation can't be is null");
+            }
+            if (second._n == 0)
+            {
+                throw new DivideByZeroException("Divide can't 0");
             }
             var result_m = first._m * second._n;
             var result_n = first._n * second._m;
