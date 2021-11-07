@@ -1,5 +1,5 @@
 ﻿using System;
-//Dodelat
+
 namespace Task04_03
 {
     public readonly struct RationalRepresentationStruct : IComparable
@@ -12,12 +12,12 @@ namespace Task04_03
         public RationalRepresentationStruct(int n, int m)
         {
             m = m > 0 ? m : throw new ArgumentException("M can't be <= 0");
-            (m, m) = IrreducibleFunc(n, m);
+            (n, m) = IrreducibleFunc(n, m);
             _nestedStruct = new NestedStruct(n, m);
         }
         #endregion
         #region struct
-        private struct NestedStruct 
+        private readonly struct NestedStruct 
         {
             private readonly int _n;
             private readonly int _m;
@@ -81,6 +81,7 @@ namespace Task04_03
                 flag = true;
                 n = Math.Abs(n);
             }
+
             for (var i = n + m; i > 0; i--)
             {
                 if (n % i == 0 && m % i == 0)

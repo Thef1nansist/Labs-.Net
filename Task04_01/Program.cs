@@ -57,7 +57,6 @@ namespace Task04_01
             intdig[4, 4] = 5;
             Console.WriteLine(intdig.ToString());
 
-
             DiagonalMatrix<int> intdig2 = new(4);
 
             intdig2[0, 0] = 1;
@@ -70,7 +69,6 @@ namespace Task04_01
             {
                 return a1 + a2;
             }));
-
 
             Console.WriteLine("ComeBack value type ***************");
             MatrixTracker<int> matrixTracker = new(intdig2);
@@ -86,9 +84,7 @@ namespace Task04_01
             matrixTracker.Undo();
             Console.WriteLine(intdig2);
 
-
            // DiagonalMatrix<decimal> decimaldig = new(-5);
-
         }
     }
 }

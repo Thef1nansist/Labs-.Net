@@ -24,9 +24,6 @@ namespace Task04_03
             RationalRepresentationStruct rational = 10;
             Console.WriteLine(n);
             Console.WriteLine(rational);
-
-
-
         }
     }
 }

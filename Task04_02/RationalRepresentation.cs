@@ -5,41 +5,42 @@ namespace Task04_02
     public sealed class RationalRepresentation : IComparable
     {
         #region private fields
-        private readonly int _n;
-        private readonly int _m;
+        private readonly int _numerator;
+        private readonly int _denominator;
         #endregion
 
         #region constructor
         public RationalRepresentation(int n, int m)
         {
             m = m > 0 ? m : throw new ArgumentException("M can't be <= 0");
-            (_n, _m) = IrreducibleFunc(n, m);
+            (_numerator, _denominator) = IrreducibleFunc(n, m);
         }
         #endregion
         #region methods
-        private static (int, int) IrreducibleFunc(int n, int m)
+        private static (int, int) IrreducibleFunc(int numerator, int denominator)
         {
             var flag = false;
-            if (n < 0)
+            if (numerator < 0)
             {
                 flag = true;
-                n = Math.Abs(n);
+                numerator = Math.Abs(numerator);
             }
-            for (var i = n + m; i > 0; i--)
+
+            for (var i = numerator + denominator; i > 0; i--)
             {
-                if (n % i == 0 && m % i == 0)
+                if (numerator % i == 0 && denominator % i == 0)
                 {
-                    n /= i;
-                    m /= i;
+                    numerator /= i;
+                    denominator /= i;
                 }
             }
 
             if (flag)
             {
-                n = -n;
+                numerator = -numerator;
             }
 
-            return (n, m);
+            return (numerator, denominator);
         }
 
         public override bool Equals(object obj)
@@ -49,7 +50,7 @@ namespace Task04_02
                 return false;
             }
 
-            if (ratrep._m == _m && ratrep._n == _n)
+            if (ratrep._denominator == _denominator && ratrep._numerator == _numerator)
             {
                 return true;
             }
@@ -57,9 +58,9 @@ namespace Task04_02
             return false;
         }
 
-        public override int GetHashCode() => HashCode.Combine(_n, _m);
+        public override int GetHashCode() => HashCode.Combine(_numerator, _denominator);
 
-        public override string ToString() => $"{_n}/{_m}";
+        public override string ToString() => $"{_numerator}/{_denominator}";
 
         public int CompareTo(object obj)
         {
@@ -68,16 +69,15 @@ namespace Task04_02
                 throw new TypeAccessException();
             }
 
-            var valueble = (double)_n / _m - (double)ratrep._n /ratrep._m;
-
-            if(valueble == 0)
+            var valueble = (double)_numerator / _denominator - (double)ratrep._numerator / ratrep._denominator;
+            if (valueble == 0)
             {
                 return 0;
             }
 
             return valueble > 0 ? 1 : -1;
         }
-#endregion
+        #endregion
         #region ovveride operators
         public static RationalRepresentation operator +(RationalRepresentation first, RationalRepresentation second)
         {
@@ -85,8 +85,10 @@ namespace Task04_02
             {
                 throw new ArgumentNullException("RationalRepresentation can't be is null");
             }
-           var result_m = first._m * second._m;
-           var result_n = first._n * second._m + second._n * first._m;
+
+            var result_m = first._denominator * second._denominator;
+            var result_n = first._numerator * second._denominator + second._numerator * first._denominator;
+
             return new(result_n, result_m);
         }
         public static RationalRepresentation operator -(RationalRepresentation first, RationalRepresentation second)
@@ -95,19 +97,22 @@ namespace Task04_02
             {
                 throw new ArgumentNullException("RationalRepresentation can't be is null");
             }
-            var result_m = first._m * second._m;
-            var result_n = first._n * second._m - second._n * first._m;
+
+            var result_m = first._denominator * second._denominator;
+            var result_n = first._numerator * second._denominator - second._numerator * first._denominator;
+
             return new(result_n, result_m);
         }
-
         public static RationalRepresentation operator *(RationalRepresentation first, RationalRepresentation second)
         {
             if (first == null || second == null)
             {
                 throw new ArgumentNullException("RationalRepresentation can't be is null");
             }
-            var result_m = first._m * second._m;
-            var result_n = first._n * second._n;
+
+            var result_m = first._denominator * second._denominator;
+            var result_n = first._numerator * second._numerator;
+
             return new(result_n, result_m);
         }
         public static RationalRepresentation operator /(RationalRepresentation first, RationalRepresentation second)
@@ -116,12 +121,15 @@ namespace Task04_02
             {
                 throw new ArgumentNullException("RationalRepresentation can't be is null");
             }
-            if (second._n == 0)
+
+            if (second._numerator == 0)
             {
                 throw new DivideByZeroException("Divide can't 0");
             }
-            var result_m = first._m * second._n;
-            var result_n = first._n * second._m;
+
+            var result_m = first._denominator * second._numerator;
+            var result_n = first._numerator * second._denominator;
+
             return new(result_n, result_m);
         }
 
@@ -132,11 +140,10 @@ namespace Task04_02
                 throw new ArgumentNullException("Argument is null");
             }
 
-            return (double)rationalRepresentation._n / rationalRepresentation._m;
+            return (double)rationalRepresentation._numerator / rationalRepresentation._denominator;
         }
 
         public static implicit operator RationalRepresentation(int number) => new(number, 1);
-
         #endregion
     }
 }
