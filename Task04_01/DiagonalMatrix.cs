@@ -7,14 +7,14 @@ namespace Task04_01
         public event Action<int, int, T, T> ElementChanged;
         private readonly T[] _data;
 
-        public readonly int Size;
+        public int Size { get; }
 
         public T this[int i, int j]
         {
             get => i == j && IsCorrect(i) ? _data[i] : default;
             set
             {
-                if (i == j && IsCorrect(i) && !(_data[i]?.GetHashCode() == value?.GetHashCode()))
+                if (i == j && IsCorrect(i) && !Equals(_data[i], value))
                 {
                     var temp = _data[i];
                     _data[i] = value;

@@ -43,20 +43,10 @@ namespace Task04_02
             return (numerator, denominator);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj is not RationalRepresentation ratrep)
-            {
-                return false;
-            }
-
-            if (ratrep._denominator == _denominator && ratrep._numerator == _numerator)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        public override bool Equals(object obj) =>
+                obj is RationalRepresentation rat &&
+                rat._denominator == _denominator &&
+                rat._numerator == _numerator;
 
         public override int GetHashCode() => HashCode.Combine(_numerator, _denominator);
 

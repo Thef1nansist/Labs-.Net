@@ -19,38 +19,28 @@ namespace Task04_03
         #region struct
         private readonly struct NestedStruct 
         {
-            private readonly int _n;
-            private readonly int _m;
+            private readonly int _numerator;
+            private readonly int _denominator;
             public int M
             {
-                get => _m != 0 ? _m : 1;
+                get => _denominator != 0 ? _denominator : 1;
             }
 
-            public int N { get => _n; }
+            public int N { get => _numerator; }
 
             public NestedStruct(int n, int m)
             {
-                _n = n;
-                _m = m;
+                _numerator = n;
+                _denominator = m;
             }
 
         }
         #endregion
         #region methods
-        public override bool Equals(object obj)
-        {
-            if (obj is not RationalRepresentationStruct ratrep)
-            {
-                return false;
-            }
-
-            if (ratrep._nestedStruct.M == _nestedStruct.M && ratrep._nestedStruct.N == _nestedStruct.N)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        public override bool Equals(object obj) =>
+             obj is RationalRepresentationStruct rat &&
+             rat._nestedStruct.M == _nestedStruct.M &&
+             rat._nestedStruct.N == _nestedStruct.N;
 
         public override int GetHashCode() => HashCode.Combine(_nestedStruct.N, _nestedStruct.M);
 
