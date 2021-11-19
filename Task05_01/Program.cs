@@ -16,14 +16,19 @@ namespace Task05_01
             matrix[3, 3] = 5;
             matrix[4, 2] = 5;
             matrix[5, 5] = 5;
-            //Console.WriteLine(matrix.ToString());
+            Console.WriteLine(matrix.ToString());
 
-            //foreach (var item in matrix)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in matrix)
+            {
+                Console.WriteLine(item);
+            }
 
-            Console.WriteLine(matrix.GetCount(4));
+            Console.WriteLine(matrix.GetCount(5));
+
+            foreach (var item in matrix.GetNonxeroElements())
+            {
+                Console.WriteLine(item);
+            }
 
         }
     }

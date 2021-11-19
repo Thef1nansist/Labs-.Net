@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Task05_01
 {
@@ -110,10 +108,22 @@ namespace Task05_01
             return stringBuilder.ToString();
         }
 
-        //public IEnumerable<(int, int, int)> GetNonxeroElements()
-        //{
-            
-        //}
+        public IEnumerable<(int, int, int)> GetNonxeroElements()
+        {
+            for (var j = 1; j <= _countOfColumn; j++)
+            {
+                for (var i = 1; i <= _countOfRow; i++)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Row == i && item.Column == j && item.Value != 0)
+                        {
+                            yield return (i, j, item.Value);
+                        }
+                    }
+                }
+            }
+        }
 
         public int GetCount(int x)
         {
@@ -145,6 +155,7 @@ namespace Task05_01
                     flag = false;
                 }
             }
+
             return count;
         }
 
