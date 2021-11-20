@@ -1,45 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Task05_02
 {
-    public class Catalog
+    public class Catalog : IEnumerable<BookModel>
     {
-        private readonly Dictionary<string, BookModel> _dictionary;
-
-        public Dictionary<string, BookModel> Dictionary { get => _dictionary; }
+        private Dictionary<string, BookModel> Dictionary { get; }
         public Catalog()
         {
-            _dictionary = new();
+            Dictionary = new();
         }
 
         public void Add(string isbn, BookModel bookModel)
         {
-
             isbn = isbn ?? throw new ArgumentNullException(nameof(isbn));
             bookModel = bookModel ?? throw new ArgumentNullException(nameof(bookModel));
 
-            var pattern = @"^\d{3}-?\d{1}-?\d{2}-?\d{6}-?\d{1}$";
+            var pattern = @"^\d{3}-\d{1}-\d{2}-\d{6}-\d{1}$";
+            var patternWithOut = @"^\d{13}$";
 
-            if(Regex.IsMatch(isbn, pattern) && !_dictionary.ContainsKey(isbn))
+            if ((Regex.IsMatch(isbn, pattern)|| Regex.IsMatch(isbn, patternWithOut)) && !Dictionary.ContainsKey(isbn))
             {
-                _dictionary.Add(isbn, bookModel);
+                isbn = isbn.Replace("-", "");
+                Dictionary[isbn] = bookModel;
             }
         }
-        
+
         public void RemoveItem(string isbn)
         {
             isbn = isbn ?? throw new ArgumentNullException(nameof(isbn));
-            
-            if(_dictionary.ContainsKey(isbn))
+
+            if (Dictionary.ContainsKey(isbn))
             {
-                _dictionary.Remove(isbn);
+                Dictionary.Remove(isbn);
             }
         }
 
@@ -47,16 +42,24 @@ namespace Task05_02
         {
             isbn = isbn ?? throw new ArgumentNullException(nameof(isbn));
             var pattern = @"^\d{3}-?\d{1}-?\d{2}-?\d{6}-?\d{1}$";
+            isbn = Regex.IsMatch(isbn, pattern) ? isbn.Replace("-", "") : throw new KeyNotFoundException();
 
-            foreach (var item in _dictionary)
+            if (Dictionary.TryGetValue(isbn, out BookModel book))
             {
-                if (Regex.Match(isbn, pattern).Value.Equals(Regex.Match(item.Key, pattern).Value))
-                {
-                    return (item.Key, item.Value);
-                }
+                return (isbn, book);
             }
 
-            return ("", new());
+            throw new KeyNotFoundException();
         }
+
+        public IEnumerator<BookModel> GetEnumerator()
+        {
+            foreach (var (_, value) in Dictionary)
+            {
+                yield return value;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -4,13 +4,13 @@ namespace Task05_01
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var matrix = new SparseMatrix(5, 5);
             matrix[1, 1] = 5;
             matrix[1, 3] = 5;
             matrix[1, 5] = 5;
-            matrix[1, 2] = 5;
+            matrix[1, 1] = 5;
             matrix[3, 5] = 5;
             matrix[2, 3] = 5;
             matrix[3, 3] = 5;
@@ -25,11 +25,10 @@ namespace Task05_01
 
             Console.WriteLine(matrix.GetCount(5));
 
-            foreach (var item in matrix.GetNonxeroElements())
+            foreach (var item in matrix.GetNonZeroElements())
             {
                 Console.WriteLine(item);
             }
-
         }
     }
 }

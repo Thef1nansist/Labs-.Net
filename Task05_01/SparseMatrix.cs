@@ -2,36 +2,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Task05_01
 {
-    public class SparseMatrix : IEnumerable<int>
+    public class SparseMatrix : IEnumerable<long>
     {
         private readonly List<ElementOfList> list;
         private readonly int _countOfRow;
         private readonly int _countOfColumn;
 
-        public int this[int row, int column]
+        public long this[int row, int column]
         {
             get
             {
-                if (IsCorrect(row, column))
+                if (!IsCorrect(row, column))
                 {
                     throw new IndexOutOfRangeException();
                 }
 
                 foreach (var item in list)
                 {
-                    if( item.Row == row && item.Column == column)
+                    if (item.Row == row && item.Column == column)
                     {
                         return item.Value;
                     }
                 }
+
                 return 0;
             }
             set
             {
-                if (IsCorrect(row, column))
+                if (!IsCorrect(row, column))
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -49,30 +51,26 @@ namespace Task05_01
                 }
                 else
                 {
-                    var flag = true;
                     foreach (var item in list)
                     {
-                        if(item.Row == row && item.Column == column)
+                        if (item.Row == row && item.Column == column)
                         {
                             item.Value = value;
-                            flag = false;
-                            break;
+                            return;
                         }
                     }
 
-                    if(flag)
-                    {
-                        list.Add(new ElementOfList(row, column, value));
-                    }
+                    list.Add(new ElementOfList(row, column, value));
                 }
             }
         }
         public SparseMatrix(int countOfRow, int countOfColumn)
         {
-            if (countOfColumn < 0 || countOfRow < 0 )
+            if (countOfColumn < 0 || countOfRow < 0)
             {
                 throw new IndexOutOfRangeException();
             }
+
             _countOfRow = countOfRow;
             _countOfColumn = countOfColumn;
             list = new();
@@ -81,9 +79,9 @@ namespace Task05_01
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            var flag = false;
+            var flagOfZero = false;
 
-            for (var i = 1; i <= _countOfRow ; i++)
+            for (var i = 1; i <= _countOfRow; i++)
             {
                 for (var j = 1; j <= _countOfColumn; j++)
                 {
@@ -92,43 +90,43 @@ namespace Task05_01
                         if (item.Row == i && item.Column == j)
                         {
                             stringBuilder.Append($"{item.Value,-10}");
-                            flag = true;
+                            flagOfZero = true;
                             break;
                         }
                     }
 
-                    if (!flag)
+                    if (!flagOfZero)
                     {
                         stringBuilder.Append($"{0,-10}");
                     }
-                    flag = false;
+
+                    flagOfZero = false;
                 }
+
                 stringBuilder.Append(Environment.NewLine);
             }
+
             return stringBuilder.ToString();
         }
 
-        public IEnumerable<(int, int, int)> GetNonxeroElements()
-        {
-            for (var j = 1; j <= _countOfColumn; j++)
-            {
-                for (var i = 1; i <= _countOfRow; i++)
-                {
-                    foreach (var item in list)
-                    {
-                        if (item.Row == i && item.Column == j && item.Value != 0)
-                        {
-                            yield return (i, j, item.Value);
-                        }
-                    }
-                }
-            }
-        }
+        public IEnumerable<(int, int, long)> GetNonZeroElements() => list
+            .OrderBy(x => x.Column)
+            .ThenBy(x => x.Row)
+            .Select(x => (x.Row, x.Column, x.Value));
 
         public int GetCount(int x)
         {
-            var flag = false;
-            var count = 0;
+            if (x == 0)
+            {
+                return _countOfRow * _countOfColumn - list.Count;
+            }
+
+            return list.Count(e => e.Value == x);
+        }
+
+        public IEnumerator<long> GetEnumerator()
+        {
+            var flagOfZero = false;
             for (var i = 1; i <= _countOfRow; i++)
             {
                 for (var j = 1; j <= _countOfColumn; j++)
@@ -137,77 +135,40 @@ namespace Task05_01
                     {
                         if (item.Row.Equals(i) && item.Column.Equals(j))
                         {
-                            flag = true;
-                            if (item.Value.Equals(x))
-                            {
-                                count++;
-                            }
-
-                            break;
-                        }
-                    }
-
-                    if(!flag && x == 0)
-                    {
-                        count++;
-                    }
-
-                    flag = false;
-                }
-            }
-
-            return count;
-        }
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            var flag = false;
-            for (var i =1 ; i <= _countOfRow; i++)
-            {
-                for (var j = 1; j <= _countOfColumn; j++)
-                {
-                    foreach (var item in list)
-                    {
-                        if(item.Row.Equals(i) && item.Column.Equals(j))
-                        {
                             yield return item.Value;
-                            flag = true;
+                            flagOfZero = true;
                             break;
                         }
                     }
 
-                    if(!flag)
+                    if (!flagOfZero)
                     {
                         yield return 0;
                     }
 
-                    flag = false;
+                    flagOfZero = false;
                 }
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private bool IsCorrect(int row, int column) => row < 0 || row > _countOfRow || column < 0 || column > _countOfColumn;
+        private bool IsCorrect(int row, int column) => row >= 0 || row <= _countOfRow || column <= 0 || column >= _countOfColumn;
 
         private class ElementOfList
         {
-            private readonly int _row;
-            private readonly int _column;
-            private int _value;
+            public int Row { get; }
+            public int Column { get; }
 
-            public int Row { get => _row; }
-            public int Column { get => _column; }
+            public long Value { get; set; }
 
-            public int Value { get => _value; set => _value = value; }
-
-            public ElementOfList(int row, int column, int value)
+            public ElementOfList(int row, int column, long value)
             {
-                _row = row;
-                _column = column;
-                _value = value;
+                Row = row;
+                Column = column;
+                Value = value;
             }
         }
-        
+
     }
 }
