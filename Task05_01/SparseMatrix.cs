@@ -79,7 +79,7 @@ namespace Task05_01
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            var flagOfZero = false;
+            var isZero = false;
 
             for (var i = 1; i <= _countOfRow; i++)
             {
@@ -90,17 +90,17 @@ namespace Task05_01
                         if (item.Row == i && item.Column == j)
                         {
                             stringBuilder.Append($"{item.Value,-10}");
-                            flagOfZero = true;
+                            isZero = true;
                             break;
                         }
                     }
 
-                    if (!flagOfZero)
+                    if (!isZero)
                     {
                         stringBuilder.Append($"{0,-10}");
                     }
 
-                    flagOfZero = false;
+                    isZero = false;
                 }
 
                 stringBuilder.Append(Environment.NewLine);
